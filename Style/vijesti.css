@@ -1,0 +1,84 @@
+body {
+    background-color: #fdf1d3;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    height: 100px;
+    margin-bottom: -27px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(6,1fr); 
+    grid-template-areas:
+        "glavnaVijest glavnaVijest glavnaVijest glavnaVijest"
+         "glavnaVijest glavnaVijest glavnaVijest glavnaVijest"
+        "visokaVijest1 kvadratnaVijest1 kvadratnaVijest2 visokaVijest2"
+        "visokaVijest1 kvadratnaVijest3 kvadratnaVijest4 visokaVijest2"
+        "kvadratnaVijest5 kvadratnaVijest6 visokaVijest3 visokaVijest4"
+        "kvadratnaVijest7 kvadratnaVijest8 visokaVijest3 visokaVijest4";
+   
+}
+
+.glavnaVijest {
+    grid-area: glavnaVijest;
+    background-color: #cce5ff;
+    padding: 20px;
+    
+}
+
+.visokaVijest {
+    background-color: #f8d7da;
+    padding: 10px;
+    
+}
+
+#vv1 { grid-area: visokaVijest1; }
+#vv2 { grid-area: visokaVijest2; }
+#vv3 { grid-area: visokaVijest3; }
+#vv4 { grid-area: visokaVijest4; }
+
+.kvadratnaVijest {
+    background-color: #fff3cd;
+    padding: 10px;
+    aspect-ratio: 1/1;
+}
+
+#kv1 { grid-area: kvadratnaVijest1; }
+#kv2 { grid-area: kvadratnaVijest2; }
+#kv3 { grid-area: kvadratnaVijest3; }
+#kv4 { grid-area: kvadratnaVijest4; }
+#kv5 { grid-area: kvadratnaVijest5; }
+#kv6 { grid-area: kvadratnaVijest6; }
+#kv7 { grid-area: kvadratnaVijest7; }
+#kv8 { grid-area: kvadratnaVijest8; }
+
+
+
+@media (max-width: 800px){
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); 
+        grid-template-rows: repeat(10,1fr); 
+        grid-template-areas:
+            "glavnaVijest glavnaVijest"
+             "glavnaVijest glavnaVijest"
+            "visokaVijest1 kvadratnaVijest1"
+            "visokaVijest1 kvadratnaVijest2"
+            "kvadratnaVijest3  visokaVijest2"
+            "kvadratnaVijest4  visokaVijest2"
+            "kvadratnaVijest5 kvadratnaVijest6 "
+            "kvadratnaVijest7  kvadratnaVijest8"
+            "visokaVijest3 visokaVijest4"
+            "visokaVijest3 visokaVijest4";
+       
+    }
+
+}
