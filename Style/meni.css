@@ -26,19 +26,23 @@ li a {
 a:hover {
     color: #ff9900;
 }
-img{
+.meni-opis {
+    transition: opacity 0.3s ease; 
+}
+
+li a:hover .meni-opis {
+    opacity: 0; 
+}
+
+img {
     display: block;
-    width: 30px;
-    height: 30px;
-    margin-left:10px;
-    transition: transform 1s ease;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    transition: transform 1s ease, opacity 0.3s ease;
 }
-li a:hover img{
-    transform: scale(1.5); 
-}
-li a:hover span {
-    display: none;
-}
-li a img {
-    transition: transform 1s;
+
+li a:hover img {
+    transform: scale(1.5);
+    opacity: 1;
 }
