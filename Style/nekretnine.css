@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    
 }
 
 iframe {
@@ -16,7 +17,9 @@ iframe {
     font-weight: bold;
     font-size: 24px;
     margin: 20px 0;
-   
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
 }
 
 .grid-lista-nekretnina {
@@ -30,11 +33,11 @@ iframe {
     /* Centriranje po vertikali */
     display: flex;
     flex-wrap:wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: flex-start;
     gap: 20px;
     padding: 20px;
-    justify-content: left;
-    align-content: left; 
-    
 }
 .nekretnina {
     border: 2px solid #000;
@@ -43,14 +46,14 @@ iframe {
     text-align: center;
     max-width: 300px;
     height: 400px;
-    flex: 1 1 250px;
-    
-    
+    display: flex;
+    flex-direction: column;
+    flex:1 1 250px;
 }
 
 .nekretnina.kuca {
     background-color: powderblue;
-   
+    
 }
 
 .nekretnina.pp {

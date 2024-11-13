@@ -1,9 +1,17 @@
+Problemi:
 Zadatak1: Tekst linkova potavljen u span elemente. Hoverom na link span elementi nestaju.
 	  Problem prilikom prelaska misa izmedju likova.
-Zadatak4: Urađen preko grid-areas bez svojstva aspect-ratio za pojedine div-ove, ali elementi imaju odgovarjauci ratio jer zauzimaju 
+
+Zadatak4: Urađen preko grid-areas bez svojstva aspect-ratio za pojedine div-ove, ali elementi imaju odgovarajuci ratio jer zauzimaju 
 	  prostor na stranicu u zadanom omjeru (definisano preko grida);
 
 GRESKA:
 Na svim stranicama koje dodaju meni putem iframe taga, navigacija ne radi kako treba. Pojavljuju se sa desne strane menija dugmad za scrolanje i stranica koju je potrebno vidjeti klikom na link se vidi samo u okviru prostora predviđenog za meni, a ne na citavoj stranici.
+
+Riješeni problemi:
+
+Riješeno treperenje prilikom kretnja misem po meniju.
+
+Dorađen izgled u zadatku 2.
 
 

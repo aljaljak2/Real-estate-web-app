@@ -31,7 +31,8 @@ a:hover {
 }
 
 li a:hover .meni-opis {
-    opacity: 0; 
+    opacity: 0;
+    /*display: none;*/ 
 }
 
 img {
