@@ -30,10 +30,9 @@ iframe {
     justify-content: center;
     /* Centriranje po horizontali */
     /*/align-content: center;
-    /* Centriranje po vertikali */
+    /* Centriranje po vertikali*/
     display: flex;
     flex-wrap:wrap;
-    flex-direction: row;
     justify-content: flex-start;
     align-content: flex-start;
     gap: 20px;
@@ -48,8 +47,12 @@ iframe {
     height: 400px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     flex:1 1 250px;
 }
+
+
+
 
 .nekretnina.kuca {
     background-color: powderblue;
