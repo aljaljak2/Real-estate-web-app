@@ -15,6 +15,9 @@ Riješeno treperenje prilikom kretnja misem po meniju.
 Dorađen izgled u zadatku 2.
 
 Promjene:
-Zadatak 4 urađen preko grid-template-columns sa automatskim popunjavanjem redova (izgled za ekrane ispod 800px širine se ne poklapa u potpunosti).
+-Zadatak 4 urađen preko grid-template-columns sa automatskim popunjavanjem redova (izgled za ekrane ispod 800px širine se ne poklapa u potpunosti).
+
+-Zadatak4 ponovo urađen preko grid-template-areas-a ali bez unaprijed definisanih redova.
+
 
 
