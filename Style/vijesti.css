@@ -1,5 +1,5 @@
 body {
-    background-color: #fdf1d3;
+    background-color: blue;/*#fdf1d3;*/
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@ iframe {
 .container {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: auto;
+    /*grid-template-rows: auto;*/
     grid-template-areas:
         "glavna glavna glavna glavna"
         "visoka1 kv1 kv2 visoka2"
@@ -24,7 +24,7 @@ iframe {
         "kv5 kv6 visoka3  visoka4"
         "kv7 kv8 visoka3  visoka4";
     width: 100%;
-    align-items: stretch;
+   
 }
 
 .glavnaVijest {
@@ -40,7 +40,7 @@ img{
 .visokaVijest {
     background-color: yellow;
     aspect-ratio: 1 / 2;
-
+    box-sizing: border-box;
 } 
 
 .visokaVijest:nth-of-type(2){ grid-area: visoka1; } 
@@ -52,7 +52,7 @@ img{
 .kvadratnaVijest {
     background-color: rosybrown;
     aspect-ratio: 1 / 1;
-    grid-row: span 1;
+    box-sizing: border-box;
 }
 
 .kvadratnaVijest:nth-of-type(3) { grid-area: kv1; } 
@@ -66,8 +66,7 @@ img{
 
 .glavnaVijest, .visokaVijest, .kvadratnaVijest {
     overflow: auto; 
-    padding: 10px;
-    border: 1px solid black;
+    border: 0.5px solid black;
     border-collapse: collapse;
 }
 
