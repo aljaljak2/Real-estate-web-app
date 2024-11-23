@@ -2,18 +2,18 @@ let StatistikaNekretnina = function () {
     let listaNekretnina = [];
     let listaKorisnika = [];
 
-    // Create an instance of SpisakNekretnina
+    
     const spisakNekretnina = SpisakNekretnina();
 
     let init = function (nekretnineData, korisniciData) {
         listaNekretnina = nekretnineData;
         listaKorisnika = korisniciData;
 
-        // Use SpisakNekretnina's init to set up internal functionality
+       
         spisakNekretnina.init(listaNekretnina, listaKorisnika);
     };
 
-    // Use SpisakNekretnina's filtering for average square footage
+   
     let prosjecnaKvadratura = function (kriterij) {
         const filtrirane = spisakNekretnina.filtrirajNekretnine(kriterij);
         if (filtrirane.length === 0) return 0;
@@ -57,7 +57,7 @@ let StatistikaNekretnina = function () {
     };
     
 
-    // My properties logic
+   
     let mojeNekretnine = function (korisnik) {
         return listaNekretnina
             .filter(nekretnina =>
@@ -66,7 +66,7 @@ let StatistikaNekretnina = function () {
             .sort((a, b) => b.upiti.length - a.upiti.length);
     };
 
-    // Histogram calculation
+  
     let histogramCijena = function (periodi, rasponiCijena) {
         return periodi
             .map((period, periodIndex) =>
