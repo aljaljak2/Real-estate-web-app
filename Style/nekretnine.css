@@ -18,7 +18,7 @@ iframe {
     font-size: 24px;
     margin: 20px 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-self: center;
     
 }
@@ -39,6 +39,7 @@ iframe {
     gap: 20px;
     padding: 20px;
     margin-left: 6%;
+    position: relative;
 }
 .nekretnina {
     border: 2px solid #000;
@@ -51,6 +52,8 @@ iframe {
     flex-direction: column;
     justify-content: flex-start;
     flex:0 1 250px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 
@@ -97,3 +100,4 @@ iframe {
     border-radius: 5px;
     cursor: pointer;
 }
+

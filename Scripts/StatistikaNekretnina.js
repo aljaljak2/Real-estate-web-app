@@ -25,18 +25,26 @@ let StatistikaNekretnina = function () {
         return ukupnaKvadratura / filtrirane.length;
     };
 
-    // Outlier detection using SpisakNekretnina filtering
     let outlier = function (kriterij, nazivSvojstva) {
+        if (listaNekretnina.length === 0) return null;
+        const prvoValidnoSvojstvo = listaNekretnina.find(nekretnina =>
+            typeof nekretnina[nazivSvojstva] === 'number'
+        );
+    
+        if (!prvoValidnoSvojstvo) {
+            throw new Error(`Svojstvo "${nazivSvojstva}" ne postoji ili nije brojčanog tipa.`);
+        }
+
         const filtrirane = spisakNekretnina.filtrirajNekretnine(kriterij);
         if (filtrirane.length === 0) return null;
-
+    
         const srednjaVrijednost =
-            filtrirane.reduce((sum, nekretnina) => sum + nekretnina[nazivSvojstva], 0) /
-            filtrirane.length;
-
+            listaNekretnina.reduce((sum, nekretnina) => sum + nekretnina[nazivSvojstva], 0) /
+            listaNekretnina.length;
+    
         let maxDist = -Infinity;
         let outlierNekretnina = null;
-
+    
         filtrirane.forEach(nekretnina => {
             const dist = Math.abs(nekretnina[nazivSvojstva] - srednjaVrijednost);
             if (dist > maxDist) {
@@ -44,9 +52,10 @@ let StatistikaNekretnina = function () {
                 outlierNekretnina = nekretnina;
             }
         });
-
+    
         return outlierNekretnina;
     };
+    
 
     // My properties logic
     let mojeNekretnine = function (korisnik) {
@@ -63,7 +72,8 @@ let StatistikaNekretnina = function () {
             .map((period, periodIndex) =>
                 rasponiCijena.map((raspon, rasponIndex) => {
                     let brojNekretnina = listaNekretnina.filter(nekretnina => {
-                        const godinaObjave = new Date(nekretnina.datum_objave).getFullYear();
+                        const datumParts = nekretnina.datum_objave.split('.');
+                        const godinaObjave = parseInt(datumParts[2]);
                         return (
                             godinaObjave >= period.od &&
                             godinaObjave <= period.do &&
