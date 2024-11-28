@@ -9,16 +9,13 @@ function postaviCarousel(glavniElement, sviElementi, indeks = 0) {
     ) {
         return null;
     }
-
-    
+   
     function azurirajPrikaz() {
-        sviElementi.forEach((element, index) => {
-            element.style.display = 'none';
-        });
-        sviElementi[indeks].style.display = 'block';
+        
+        glavniElement.innerHTML = sviElementi[indeks].outerHTML;
     }
 
-    
+  
     function fnLijevo() {
         indeks = (indeks - 1 + sviElementi.length) % sviElementi.length;
         azurirajPrikaz();
@@ -30,8 +27,9 @@ function postaviCarousel(glavniElement, sviElementi, indeks = 0) {
         azurirajPrikaz();
     }
 
-   
+    
     azurirajPrikaz();
 
     return { fnLijevo, fnDesno };
 }
+

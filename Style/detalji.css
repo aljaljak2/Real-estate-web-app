@@ -101,48 +101,33 @@ iframe {
   }
 }
 
-@media (max-width: 599px) {
-  #upiti { 
-    padding: 40px; 
-    padding-right: 62px;
-  }
-
-  .upit {
-    display: none;
-  }
-
-  .upit:first-child {
-    display: block; 
-    width: 100%;
-  }
+.carousel-btn {
+  display: none;
 }
 
+#carousel {
+  position: relative; 
+}
 
 .carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  position: absolute;   
+  top: 50%;            
+  transform: translateY(-50%); 
   background-color: #fdf1d3;
   color: black;
   cursor: pointer;
   z-index: 1;
   padding: 10px;
   font-size: 16px;
-  border: none;
-  display: none;
+  display: none;       
 }
 
 #carouselLeft {
-  left: -5px;
-  
+  left: -1px;
 }
 
 #carouselRight {
-  right: -5px;
+  right: -1px; 
 }
 
-@media (max-width: 599px) {
-  .carousel-btn {
-    display: block;
-  }
-}
+
