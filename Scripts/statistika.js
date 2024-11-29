@@ -167,7 +167,7 @@ function izracunajOutlier() {
 
         
         const resultElement = document.getElementById("result-text-outlier");
-        if (outlierNekretnina) {
+        if (outlierNekretnina) {        
             const formattedResult = formatObject(outlierNekretnina, 0);
             resultElement.innerHTML = formattedResult.trim(); 
         } else {
@@ -314,88 +314,98 @@ function prikupljanjePodataka() {
     });
 }
 
-
-// Generate the histogram chart using Chart.js
-/*function generirajHistogram() {
+function iscrtajHistogram() {
     prikupljanjePodataka();
 
-    // Call histogramCijena function with the gathered periods and price ranges
-    const histogramData = statistikaNekretnina.histogramCijena(periodi, rasponiCijena);
-
-    // Prepare data for the chart
-    const labels = [];
-    const data = [];
-    histogramData.forEach(item => {
-        const periodLabel = `${periodi[item.indeksPerioda].od}-${periodi[item.indeksPerioda].do}`;
-        const priceRangeLabel = `${rasponiCijena[item.indeksRasporedaCijena].od}-${rasponiCijena[item.indeksRasporedaCijena].do}`;
-        labels.push(`${periodLabel} / ${priceRangeLabel}`);
-        data.push(item.brojNekretnina);
-    });
-
-    // Create the bar chart
     const ctx = document.getElementById('histogramChart').getContext('2d');
-    const histogramChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Broj Nekretnina',
-                data: data,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}*/
 
-function generirajHistogram() {
-    prikupljanjePodataka();
-    
-    const ctx = document.getElementById('histogramChart').getContext('2d');
-    
-    
+   
     if (window.histogramChart instanceof Chart) {
         window.histogramChart.destroy();
     }
 
-
+    
     const chartData = statistikaNekretnina.histogramCijena(periodi, rasponiCijena);
+
+   
+    const labels = rasponiCijena.map(raspon => `${raspon.od} - ${raspon.do}`);
+
+    
+    const kontrastneBoje = [
+        'rgba(255, 99, 132, 0.6)', // Jarko crvena
+        'rgba(54, 162, 235, 0.6)', // Jarko plava
+        'rgba(255, 206, 86, 0.6)', // Žuta
+        'rgba(75, 192, 192, 0.6)', // Svetlo tirkizna
+        'rgba(153, 102, 255, 0.6)' // Ljubičasta
+    ];
+    const kontrastneBojeIvice = kontrastneBoje.map(boja => boja.replace('0.6', '1')); 
+
+    
+    const datasets = periodi.map((period, periodIndex) => {
+        const data = rasponiCijena.map((_, rasponIndex) => {
+            const match = chartData.find(item => 
+                item.indeksPerioda === periodIndex && 
+                item.indeksRasporedaCijena === rasponIndex
+            );
+            return match ? match.brojNekretnina : 0;
+        });
+
+        return {
+            label: `Period ${period.od}-${period.do}`,
+            data: data,
+            backgroundColor: kontrastneBoje[periodIndex % kontrastneBoje.length],
+            borderColor: kontrastneBojeIvice[periodIndex % kontrastneBojeIvice.length],
+            borderWidth: 1
+        };
+    });
 
     
     window.histogramChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: chartData.map(data => `Period: ${data.indeksPerioda+1}, Raspon cijena: ${data.indeksRasporedaCijena+1}`),
-            datasets: [{
-                label: 'Broj nekretnina',
-                data: chartData.map(data => data.brojNekretnina),
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
+            labels: labels,
+            datasets: datasets
         },
         options: {
             responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.dataset.label}: ${context.raw}`;
+                        }
+                    }
+                }
+            },
             scales: {
                 x: {
-                    beginAtZero: true
+                    stacked: true, 
+                    title: {
+                        display: true,
+                        text: 'Rasponi cijena'
+                    }
                 },
                 y: {
-                    beginAtZero: true
+                    stacked: true, 
+                    title: {
+                        display: true,
+                        text: 'Broj nekretnina'
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1 
+                    }
                 }
             }
         }
     });
 }
+
+
+
 window.addEventListener('resize', function () {
     if (window.histogramChart instanceof Chart) {
         window.histogramChart.resize();
