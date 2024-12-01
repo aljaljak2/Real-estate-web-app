@@ -37,8 +37,35 @@ let SpisakNekretnina = function () {
                 return false;
             }
 
+            //dodatna filtriranja
+
+            //tip_grijanja
+            if(kriterij.tip_grijanja && nekretnina.tip_grijanja!==kriterij.tip_grijanja){
+                return false;
+            }
+            // godina_izgradnje
+        if (kriterij.godina_izgradnje && 
+            nekretnina.godina_izgradnje !== parseInt(kriterij.godina_izgradnje)) {
+            return false;
+        }
+
+        // datum_objave
+        if (kriterij.datum_objave) {
+            const kriterijDate = parseDateString(kriterij.datum_objave);
+            const nekretninaDate = parseDateString(nekretnina.datum_objave);
+
+            if (nekretninaDate.getTime() !== kriterijDate.getTime()) {
+                return false;
+            }
+        }
             return true;
         });
+    }
+
+    //dodatna funkcija za parsiranje datuma
+    function parseDateString(dateString) {
+        const [day, month, year] = dateString.split('.').map(num => parseInt(num));
+        return new Date(year, month - 1, day); 
     }
 
     let ucitajDetaljeNekretnine = function (id) {
