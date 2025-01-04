@@ -37,8 +37,9 @@ const routes = [
   { route: '/nekretnine.html', file: 'nekretnine.html' },
   { route: '/detalji.html', file: 'detalji.html' },
   { route: '/meni.html', file: 'meni.html' },
-  { route: '/login', file: 'prijava.html' },
+  { route: '/prijava.html', file: 'prijava.html' },
   { route: '/profil.html', file: 'profil.html' },
+  { route: '/mojiUpiti.html', file: 'mojiUpiti.html'},
   // Practical for adding more .html files as the project grows
 ];
 
@@ -106,7 +107,7 @@ app.post('/login', async (req, res) => {
 
     for (const korisnik of korisnici) {
       if (korisnik.username == jsonObj.username) {
-        const isPasswordMatched = await bcrypt.compare(jsonObj.password, korisnik.password);
+        const isPasswordMatched = await (jsonObj.password==korisnik.password);
 
         if (isPasswordMatched) {
           req.session.username = korisnik.username;
@@ -356,12 +357,20 @@ app.get('/upiti/moji', async (req, res) => {
   try {
     // Read properties data from the JSON file
     const nekretnine = await readJsonFile('nekretnine');
+    const korisnici = await readJsonFile('korisnici');
+
+    // Find the logged-in user
+    const loggedInUser = korisnici.find(user => user.username === req.session.username);
+
+    if (!loggedInUser) {
+      return res.status(401).json({ greska: 'Neautorizovan pristup' });
+    }
 
     // Find all queries made by the logged-in user
     const userQueries = [];
     nekretnine.forEach(nekretnina => {
       nekretnina.upiti.forEach(upit => {
-        if (upit.korisnik_id === req.session.username) {
+        if (upit.korisnik_id === loggedInUser.id) {
           userQueries.push({
             id_nekretnine: nekretnina.id,
             tekst_upita: upit.tekst_upita

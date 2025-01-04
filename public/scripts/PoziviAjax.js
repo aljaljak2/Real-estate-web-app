@@ -186,12 +186,77 @@ const PoziviAjax = (() => {
         ajax.send()
     }
 
+    function getTop5Nekretnina(lokacija, fnCallback) {
+        ajaxRequest('GET', `/nekretnine/top5?lokacija=${encodeURIComponent(lokacija)}`, null, (error, data) => {
+            if (error) {
+                fnCallback(error, null);
+            } else {
+                try {
+                    const nekretnine = JSON.parse(data);
+                    fnCallback(null, nekretnine);
+                } catch (parseError) {
+                    fnCallback(parseError, null);
+                }
+            }
+        });
+    }
+
+    function getMojiUpiti(fnCallback) {
+        ajaxRequest('GET', '/upiti/moji', null, (error, data) => {
+            if (error) {
+                fnCallback(error, null);
+            } else {
+                try {
+                    const upiti = JSON.parse(data);
+                    fnCallback(null, upiti);
+                } catch (parseError) {
+                    fnCallback(parseError, null);
+                }
+            }
+        });
+    }
+
+    function getNekretnina(nekretnina_id, fnCallback) {
+        ajaxRequest('GET', `/nekretnina/${nekretnina_id}`, null, (error, data) => {
+            if (error) {
+                fnCallback(error, null);
+            } else {
+                try {
+                    const nekretnina = JSON.parse(data);
+                    fnCallback(null, nekretnina);
+                } catch (parseError) {
+                    fnCallback(parseError, null);
+                }
+            }
+        });
+    }
+
+    function getNextUpiti(nekretnina_id, page, fnCallback) {
+        ajaxRequest('GET', `/next/upiti/nekretnina${nekretnina_id}?page=${page}`, null, (error, data) => {
+            if (error) {
+                fnCallback(error, null);
+            } else {
+                try {
+                    const upiti = JSON.parse(data);
+                    fnCallback(null, upiti);
+                } catch (parseError) {
+                    fnCallback(parseError, null);
+                }
+            }
+        });
+    }
+
+
     return {
         postLogin: impl_postLogin,
         postLogout: impl_postLogout,
         getKorisnik: impl_getKorisnik,
         putKorisnik: impl_putKorisnik,
         postUpit: impl_postUpit,
-        getNekretnine: impl_getNekretnine
+        getNekretnine: impl_getNekretnine,
+        getTop5Nekretnina: getTop5Nekretnina,
+        getMojiUpiti: getMojiUpiti,
+        getNekretnina: getNekretnina,
+        getNextUpiti: getNextUpiti
     };
 })();

@@ -1,0 +1,108 @@
+body {
+    background-color: blue;/*#fdf1d3;*/
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    height: 100px;
+    margin-bottom: -35px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    /*grid-template-rows: auto;*/
+    grid-template-areas:
+        "glavna glavna glavna glavna"
+        "visoka1 kv1 kv2 visoka2"
+        "visoka1 kv3 kv4 visoka2"
+        "kv5 kv6 visoka3  visoka4"
+        "kv7 kv8 visoka3  visoka4";
+    width: 100%;
+   
+}
+
+.glavnaVijest {
+    background-color: #cce5ff;
+    grid-area: glavna;
+    aspect-ratio: 2 / 1;
+}
+img{
+    display: block;
+    margin: 0 auto;
+}
+
+.visokaVijest {
+    background-color: yellow;
+    aspect-ratio: 1 / 2;
+    box-sizing: border-box;
+} 
+
+.visokaVijest:nth-of-type(2){ grid-area: visoka1; } 
+.visokaVijest:nth-of-type(5) { grid-area: visoka2; } 
+.visokaVijest:nth-of-type(10) { grid-area: visoka3; } 
+.visokaVijest:nth-of-type(11) { grid-area: visoka4; }
+
+
+.kvadratnaVijest {
+    background-color: rosybrown;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+}
+
+.kvadratnaVijest:nth-of-type(3) { grid-area: kv1; } 
+.kvadratnaVijest:nth-of-type(4) { grid-area: kv2; } 
+.kvadratnaVijest:nth-of-type(6) { grid-area: kv3; } 
+.kvadratnaVijest:nth-of-type(7) { grid-area: kv4; } 
+.kvadratnaVijest:nth-of-type(8) { grid-area: kv5; } 
+.kvadratnaVijest:nth-of-type(9) { grid-area: kv6; } 
+.kvadratnaVijest:nth-of-type(12) { grid-area: kv7; } 
+.kvadratnaVijest:nth-of-type(13) { grid-area: kv8; }
+
+.glavnaVijest, .visokaVijest, .kvadratnaVijest {
+    overflow: auto; 
+    border: 0.5px solid black;
+    border-collapse: collapse;
+}
+
+.kvadratnaVijest:nth-of-type(n+14) {
+   /*display: grid;*/
+   grid-column: span 1;
+   grid-row: span 1;
+}
+
+.visokaVijest:nth-of-type(n+14) {
+    /*display: grid;*/
+    grid-column: span 1;
+    grid-row: span 2;
+ }
+
+@media (max-width: 800px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr); 
+        grid-template-areas:
+            "glavna glavna"
+            "visoka1 kv1 "
+            "visoka1 kv2"
+            "kv3 visoka2"
+            "kv4 visoka2 "
+            "kv5 kv6"
+            "kv7 kv8"
+            "visoka3 visoka4"
+            "visoka3 visoka4";
+    }
+    .glavnaVijest {
+        aspect-ratio: 1 / 1; 
+    }
+    .visokaVijest{
+        grid-column: span 1;
+    }
+    .kvadratnaVijest{
+        grid-column: span 1;
+    }
+}
