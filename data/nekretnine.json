@@ -54,11 +54,11 @@
             
                 {
                     "korisnik_id": 2,
-                    "tekst_upita": "Integer tincidunt."
+                    "tekst_upita": "Sve OK."
                 },
                 {
                     "korisnik_id": 2,
-                    "tekst_upita": "Integer tincidunt."
+                    "tekst_upita": "Prvi isti"
                 },
                 {
                     "korisnik_id": 2,
@@ -71,7 +71,12 @@
                 {
                     "korisnik_id": 1,
                     "tekst_upita": "Bazen nije fino očišćen"
+                },
+                {
+                    "korisnik_id": 1,
+                    "tekst_upita": "Sve je bilo na nivou"
                 }
+
             
         ]
     },

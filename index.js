@@ -433,14 +433,18 @@ app.get('/next/upiti/nekretnina:id', async (req, res) => {
     }
 
     // Calculate the starting index for the queries based on the PAGE parameter
-    const startIndex = page * 3;
-    const nextQueries = nekretnina.upiti.slice(startIndex, startIndex + 3);
+    const totalUpiti = nekretnina.upiti.length;
+    const startIndex = totalUpiti - (page + 1) * 3;
+    const endIndex = startIndex + 3;
+
+    // Ensure startIndex is not less than 0
+    const nextQueries = nekretnina.upiti.slice(Math.max(0, startIndex), endIndex);
 
     if (nextQueries.length === 0) {
       return res.status(404).json([]);
     }
 
-    // Return the next 3 queries
+    // Return the next queries
     res.status(200).json(nextQueries.map(upit => ({
       korisnik_id: upit.korisnik_id,
       tekst_upita: upit.tekst_upita

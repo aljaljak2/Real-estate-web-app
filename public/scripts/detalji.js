@@ -1,10 +1,84 @@
 document.addEventListener('DOMContentLoaded', function () {
     const urlParams = new URLSearchParams(window.location.search);
     const nekretninaId = urlParams.get('id');
+    let currentPage = 1; // Start from page 1 for subsequent calls
+    let allUpitiLoaded = false;
+    let currentUpiti = [];
+    let currentIndex = 0;
 
     if (!nekretninaId) {
         console.error('No property ID provided');
         return;
+    }
+
+    function displayUpiti(upiti) {
+        const upitiContainer = document.getElementById('upiti');
+        upitiContainer.innerHTML = ''; // Clear existing upiti
+        upiti.forEach(upit => {
+            const upitElement = document.createElement('div');
+            upitElement.className = 'upit';
+            upitElement.innerHTML = `
+                <p><strong>Korisnik ID ${upit.korisnik_id}:</strong></p>
+                <p>${upit.tekst_upita}</p>
+            `;
+            upitiContainer.appendChild(upitElement);
+        });
+    }
+    let jednom=false;
+    function loadNextUpiti(callback) {
+        if (allUpitiLoaded) return;
+
+        PoziviAjax.getNextUpiti(nekretninaId, currentPage, function (error, nextUpiti) {
+            if (error) {
+                console.error('Error fetching next upiti:', error);
+                return;
+            }
+
+            if (nextUpiti.length < 3) {
+
+                allUpitiLoaded = true;
+                if (jednom==false){
+                    jednom=true;
+                }else{
+                    return;
+                }
+                   
+                
+            }else if (nextUpiti.length ===3){
+               PoziviAjax.getNextUpiti(nekretninaId, currentPage+1, function (error, nextUpiti) {
+                    if (error) {
+                        allUpitiLoaded = true;
+                        return;
+                    }
+               });
+            }
+
+            currentUpiti = currentUpiti.concat(nextUpiti);
+            
+            currentPage++;
+            if (callback) callback();
+        });
+    }
+
+    function initializeCarousel() {
+        const carousel = postaviCarousel(document.getElementById('upiti'), currentUpiti, loadNextUpiti);
+        if (carousel) {
+            document.getElementById('carousel-left').addEventListener('click', function () {
+                currentIndex = (currentIndex - 1 + currentUpiti.length) % currentUpiti.length;
+                displayUpiti([currentUpiti[currentIndex]]);
+            });
+            document.getElementById('carousel-right').addEventListener('click', function () {
+                if (currentIndex === currentUpiti.length - 1 && !allUpitiLoaded) {
+                    loadNextUpiti(function () {
+                        currentIndex = (currentIndex + 1) % currentUpiti.length;
+                        displayUpiti([currentUpiti[currentIndex]]);
+                    });
+                } else {
+                    currentIndex = (currentIndex + 1) % currentUpiti.length;
+                    displayUpiti([currentUpiti[currentIndex]]);
+                }
+            });
+        }
     }
 
     PoziviAjax.getNekretnina(nekretninaId, function (error, nekretnina) {
@@ -36,32 +110,19 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        const upiti = document.getElementById('upiti');
-        const upitiList = [];
-        nekretnina.upiti.forEach(upit => {
-            const upitElement = document.createElement('div');
-            upitElement.className = 'upit';
-            upitElement.innerHTML = `
-                <p><strong>Korisnik ID ${upit.korisnik_id}:</strong></p>
-                <p>${upit.tekst_upita}</p>
-            `;
-            upiti.appendChild(upitElement);
-            upitiList.push(upitElement);
-        });
+        currentUpiti = nekretnina.upiti; // Get the initial upiti
+        initializeCarousel();
+        if (currentUpiti.length > 0) {
+            displayUpiti([currentUpiti[currentIndex]]);
+        } else {
+            displayUpiti([]);
+        }
+        
 
         document.getElementById('lokacija-link').addEventListener('click', function (event) {
             event.preventDefault();
             const lokacija = nekretnina.lokacija;
             window.location.href = `nekretnine.html?lokacija=${encodeURIComponent(lokacija)}`;
         });
-
-        // Initialize the carousel
-        if (upitiList.length > 0) {
-            const carousel = postaviCarousel(upiti, upitiList);
-            if (carousel) {
-                document.getElementById('carousel-left').addEventListener('click', carousel.fnLijevo);
-                document.getElementById('carousel-right').addEventListener('click', carousel.fnDesno);
-            }
-        }
     });
 });
