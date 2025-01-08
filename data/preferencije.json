@@ -2,11 +2,41 @@
   {
     "id": 1,
     "pretrage": 46,
-    "klikovi": 33
+    "klikovi": 58
   },
   {
     "id": 2,
     "pretrage": 76,
-    "klikovi": 20
+    "klikovi": 23
+  },
+  {
+    "id": 3,
+    "pretrage": 0,
+    "klikovi": 2
+  },
+  {
+    "id": 4,
+    "pretrage": 0,
+    "klikovi": 4
+  },
+  {
+    "id": 5,
+    "pretrage": 0,
+    "klikovi": 3
+  },
+  {
+    "id": 6,
+    "pretrage": 0,
+    "klikovi": 2
+  },
+  {
+    "id": 7,
+    "pretrage": 0,
+    "klikovi": 2
+  },
+  {
+    "id": 8,
+    "pretrage": 0,
+    "klikovi": 1
   }
 ]

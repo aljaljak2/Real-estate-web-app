@@ -14,8 +14,9 @@ iframe {
 }
 
 #search-container {
-   margin-top: 110px;
+    margin-top: 70px;
     margin-bottom: 30px;
+    margin-top: 100px;
 }
 
 
@@ -43,7 +44,8 @@ h1 {
     background-color: white;
     text-align: center;
     max-width: 300px;
-    height: 400px;
+    box-sizing: border-box;
+    height: 450px;
 }
 
 .nekretnina.kuca {
