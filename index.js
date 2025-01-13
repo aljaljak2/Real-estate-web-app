@@ -40,6 +40,7 @@ const routes = [
   { route: '/prijava.html', file: 'prijava.html' },
   { route: '/profil.html', file: 'profil.html' },
   { route: '/mojiUpiti.html', file: 'mojiUpiti.html'},
+  {route: '/statistika.html', file:'statistika.html'},
   // Practical for adding more .html files as the project grows
 ];
 
@@ -75,9 +76,17 @@ async function saveJsonFile(filename, data) {
 
 // Helper function to log login attempts
 async function logLoginAttempt(username, status) {
-  const logMessage = `[${new Date().toLocaleString('en-GB', { timeZone: 'Europe/Sarajevo' })}] - username: "${username}" - status: "${status}"\n`;
+  const now = new Date();
+  const offsetInHours = 1; // Adjust for UTC+1 (CET)
+  const offsetInMilliseconds = offsetInHours * 60 * 60 * 1000;
+
+  // Apply the offset
+  const localTime = new Date(now.getTime() + offsetInMilliseconds);
+  const logMessage = `${localTime.toISOString()} - username: "${username}" - status: "${status}"\n`;
+
   await fs.appendFile('prijave.txt', logMessage, 'utf-8');
 }
+
 
 // In-memory store for tracking login attempts
 const loginAttempts = {};
@@ -128,8 +137,9 @@ app.post('/login', async (req, res) => {
       loginAttempts[username].attempts += 1;
 
       // Block user after 3 failed attempts
-      if (loginAttempts[username].attempts > 3) {
+      if (loginAttempts[username].attempts >= 3 && loginAttempts[username].blockedUntil <= Date.now()) {
         console.log('Blocked user:', username);
+
         loginAttempts[username].blockedUntil = Date.now() + 60000; // Block for 1 minute
         await logLoginAttempt(username, 'neuspješno');
         setTimeout(() => {
