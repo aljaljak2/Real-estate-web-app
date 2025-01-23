@@ -21,5 +21,3 @@ window.onload =function(){
         })
     }
 }
-
-console.log(bcrypt.hashSync("password1", 10));

@@ -114,7 +114,7 @@
   },
   {
     "id": 6,
-    "tip_nekretnine": "Stan",
+    "tip_nekretnine": "Stan158",
     "naziv": "Stan u centru grada",
     "kvadratura": 70,
     "cijena": 300000,
@@ -127,7 +127,7 @@
   },
   {
     "id": 7,
-    "tip_nekretnine": "Kuća",
+    "tip_nekretnine": "Kuća34",
     "naziv": "Kuća u prirodi",
     "kvadratura": 150,
     "cijena": 400000,
@@ -140,7 +140,7 @@
   },
   {
     "id": 8,
-    "tip_nekretnine": "Stan",
+    "tip_nekretnine": "Stan46",
     "naziv": "Stan u centru grada",
     "kvadratura": 70,
     "cijena": 300000,
