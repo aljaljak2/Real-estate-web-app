@@ -1,4 +1,4 @@
-function postaviCarousel(glavniElement, sviElementi, loadNextUpiti, indeks = 0) {
+function postaviCarousel(glavniElement, sviElementi, indeks = 0) {
     if (
         !glavniElement ||
         !sviElementi ||
@@ -22,9 +22,9 @@ function postaviCarousel(glavniElement, sviElementi, loadNextUpiti, indeks = 0) 
     function fnDesno() {
         indeks = (indeks + 1) % sviElementi.length;
         azurirajPrikaz();
-        if (indeks === sviElementi.length - 1 && typeof loadNextUpiti === 'function') {
+       /* if (indeks === sviElementi.length - 1 && typeof loadNextUpiti === 'function') {
             loadNextUpiti();
-        }
+        }*/
     }
 
     azurirajPrikaz();

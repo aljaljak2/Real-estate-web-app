@@ -14,7 +14,7 @@ const PoziviAjax = (() => {
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
+                if (xhr.status === 200 || xhr.status ===201) {
                     callback(null, xhr.responseText);
                 } else {
                     callback({ status: xhr.status, statusText: xhr.statusText }, null);
@@ -102,7 +102,7 @@ const PoziviAjax = (() => {
                 });
             }
             
-            function ajaxRequest(method, url, data, callback) {
+            /*function ajaxRequest(method, url, data, callback) {
                 const xhr = new XMLHttpRequest();
                 xhr.open(method, url, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -118,7 +118,7 @@ const PoziviAjax = (() => {
                 };
                 
                 xhr.send(data ? JSON.stringify(data) : null);
-            }
+            }*/
             
             
         
@@ -253,20 +253,30 @@ const PoziviAjax = (() => {
             }
         });
     }
-    function postPonuda(nekretnina_id, ponudaData, fnCallback) {
-        ajaxRequest('POST', `/nekretnina/${nekretnina_id}/ponuda`, JSON.stringify(ponudaData), (error, data) => {
-            if (error) {
-                fnCallback(error, null);
-            } else {
-                try {
-                    const createdPonuda = JSON.parse(data);
-                    fnCallback(null, createdPonuda);
-                } catch (parseError) {
-                    fnCallback(parseError, null);
+    function postPonuda(nekretninaId, tekst, ponudaCijene, datumPonude, idVezanePonude, odbijenaPonuda, fnCallback) {
+        const data = {
+            tekst,
+            ponudaCijene: parseFloat(ponudaCijene), // Ensure the price is a float
+            datumPonude,
+            idVezanePonude: idVezanePonude ? parseInt(idVezanePonude) : null, // Ensure the ID is null or an integer
+            odbijenaPonuda,
+        };
+        ajaxRequest('POST',`/nekretnina/${nekretninaId}/ponuda`,data,
+            (error, data) => {
+                if (error) {
+                    fnCallback(error, null);
+                } else {
+                    try {
+                        const createdPonuda = JSON.parse(data);
+                        fnCallback(null, createdPonuda);
+                    } catch (parseError) {
+                        fnCallback(parseError, null);
+                    }
                 }
             }
-        });
+        );
     }
+    
     function postZahtjev(nekretninaId, tekst, trazeniDatum, fnCallback) {
         ajaxRequest('POST', `/nekretnina/${nekretninaId}/zahtjev`, tekst, trazeniDatum, (error, data) => {
             if (error) {
