@@ -93,10 +93,7 @@ async function logLoginAttempt(username, status) {
 
 // In-memory store for tracking login attempts
 const loginAttempts = {};
-/*
-Checks if the user exists and if the password is correct based on korisnici.json data. 
-If the data is correct, the username is saved in the session and a success message is sent.
-*/
+
 
 app.post('/login', async (req, res) => {
   const jsonObj = req.body;
@@ -619,11 +616,18 @@ app.get('/nekretnina/:id/interesovanja', async (req, res) => {
     const nekretninaId = req.params.id;
 
     // Fetch all interests
-    const upiti = await Upit.findAll({ where: { nekretninaId } });
-    const zahtjevi = await Zahtjev.findAll({ where: { nekretninaId } });
-    const ponude = await Ponuda.findAll({ where: { nekretninaId } });
+    const upiti = (await Upit.findAll({ where: { nekretninaId } })).map(upit => ({
+      ...upit.dataValues,
+      type: 'upit'
+    }));
 
-    let interesovanja = [...upiti, ...zahtjevi, ...ponude];
+    const ponude = (await Ponuda.findAll({ where: { nekretninaId } })).map(ponuda => ({
+      ...ponuda.dataValues,
+      type: 'ponuda'
+    }));
+
+    let interesovanja = [...upiti, ...ponude];
+    
 
     if (req.session && req.session.username) {
       // Fetch the logged-in user's details from the database
@@ -633,26 +637,64 @@ app.get('/nekretnina/:id/interesovanja', async (req, res) => {
         return res.status(401).json({ greska: 'Invalid user session' });
       }
 
-      const isAdmin = korisnik.admin; // Use the value from the database
+    
+      const isAdmin = korisnik.admin; 
+    let zahtjevi = [];
+      if (isAdmin) {
+        // Admin user: Fetch all zahtjevi for the nekretnina
+        zahtjevi = (await Zahtjev.findAll({ where: { nekretninaId } })).map(zahtjev => ({
+          ...zahtjev.dataValues,
+          type: 'zahtjev'
+        }));
+      } else {
+        // Non-admin user: Fetch only the zahtjevi created by the logged-in user
+        zahtjevi = (await Zahtjev.findAll({ where: { nekretninaId, korisnikId: korisnik.id } })).map(zahtjev => ({
+          ...zahtjev.dataValues,
+          type: 'zahtjev'
+        }));
+      }
+
+      if (!korisnik) {
+        zahtjevi = [];
+      }
+   
+      /*const zahtjevi = (await Zahtjev.findAll({ where: { nekretninaId } })).map(zahtjev => ({
+        ...zahtjev.dataValues,
+        type: 'zahtjev'
+      }));*/
+
+
+      interesovanja = [...interesovanja, ...zahtjevi];
 
       if (!isAdmin) {
-        // Non-admin user: Modify the response
-        interesovanja = interesovanja.map(interes => {
-          if (interes instanceof Ponuda) {
-            // Exclude cijenaPonude if unrelated to the logged-in user
-            if (interes.korisnikId !== korisnik.id && interes.parentPonudaId !== korisnik.id) {
-              const { cijenaPonude, ...rest } = interes.dataValues;
-              return rest;
+
+        const userPonudaIds = interesovanja
+        .filter(interes => interes.type === 'ponuda' && interes.korisnikId === korisnik.id)
+        .map(ponuda => ponuda.id);
+
+        const userPonudaParents=interesovanja
+        .filter(interes => interes.type === 'ponuda' && interes.korisnikId === korisnik.id)
+        .map(ponuda => ponuda.parentPonudaId);
+  
+    interesovanja = interesovanja.map(interes => {
+        if (interes.type === 'ponuda') {
+            const isCreatedByUser = interes.korisnikId === korisnik.id;
+            const isParentOfUserPonuda = userPonudaIds.includes(interes.id);
+            const isReofferedByUser=userPonudaParents.includes(interes.id);
+            if (!isCreatedByUser && !isParentOfUserPonuda && !isReofferedByUser) {
+                const { cijenaPonude, ...rest } = interes;
+                return rest;
             }
-          }
-          return interes;
-        });
+        }
+        return interes;
+       
+    });
       }
     } else {
       // Unlogged users: Remove cijenaPonude from all Ponuda records
       interesovanja = interesovanja.map(interes => {
-        if (interes instanceof Ponuda) {
-          const { cijenaPonude, ...rest } = interes.dataValues;
+        if (interes.type ==='ponuda') {
+          const { cijenaPonude, ...rest } = interes;
           return rest;
         }
         return interes;

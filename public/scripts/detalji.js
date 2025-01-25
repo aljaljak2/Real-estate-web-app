@@ -173,30 +173,49 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     function displayInteresovanja(interesovanja) {
         const upitiContainer = document.getElementById('upiti');
-        upitiContainer.innerHTML = ''; // Clear existing upiti
+        upitiContainer.innerHTML = ''; 
         
         interesovanja.forEach(interes => {
             const interesElement = document.createElement('div');
-            interesElement.className = 'interes';
+            interesElement.className = 'upit';
+        
+            
+            let typeCaption = '';
+            if (interes.type === 'upit') {
+                typeCaption = 'Upit';
+            } else if (interes.type === 'zahtjev') {
+                typeCaption = 'Zahtjev';
+            } else if (interes.type === 'ponuda') {
+                typeCaption = 'Ponuda';
+            }
+        
+          
+            interesElement.innerHTML = `<h3>${typeCaption}</h3>`;
+        
+          
+            interesElement.innerHTML += `<p><strong>ID:</strong> ${interes.id}</p>`;
     
-            // Display the common fields
-            interesElement.innerHTML = `<p><strong>ID ${interes.id}:</strong></p>`;
-    
-            if (interes instanceof Upit) {
+            if (interes.type === 'upit') {
                 interesElement.innerHTML += `
-                    <p><strong>Korisnik ID ${interes.korisnik_id}:</strong></p>
-                    <p>${interes.tekst_upita}</p>
+                    <p><strong>Korisnik ID</strong> ${interes.korisnikId}:</p>
+                    <p>${interes.tekst}</p>
                 `;
-            } else if (interes instanceof Ponuda) {
+            } else if (interes.type === 'ponuda') {
                 interesElement.innerHTML += `
                     <p>${interes.tekst}</p>
-                    <p>Status: ${interes.status === 'odobrena' ? 'Odobrena' : 'Odbijena'}</p>
+                    <p><strong>Status:</strong> ${interes.odbijenaPonuda === false ? 'Nije odbijena' : 'Odbijena'}</p>
                 `;
-            } else if (interes instanceof Zahtjev) {
+            } else if (interes.type === 'zahtjev') {
+                const date = new Date(interes.trazeniDatum);
+                const day = String(date.getDate()).padStart(2, '0');  
+                const month = String(date.getMonth() + 1).padStart(2, '0');  
+                const year = date.getFullYear();  
+
+                const formattedDate = `${day}.${month}.${year}`;  
                 interesElement.innerHTML += `
                     <p>${interes.tekst}</p>
-                    <p>Datum: ${new Date(interes.datum).toLocaleDateString()}</p>
-                    <p>Status: ${interes.status}</p>
+                    <p><strong>Datum:</strong> ${formattedDate}</p>
+                    <p><strong>Status:</strong> ${interes.odobren === false ? 'Nije odobren' : 'Odobren'}</p>
                 `;
             }
     
@@ -255,7 +274,9 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
 
-        currentUpiti = upiti; // Get the initial upiti
+        currentUpiti = upiti; 
+        console.log("Broj upita: ", currentUpiti.length);
+        console.log("Current upiti: ", currentUpiti);
         initializeCarousel();
         if (currentUpiti.length > 0) {
             displayInteresovanja([currentUpiti[currentIndex]]);
@@ -272,116 +293,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 });
-
-
-/*
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const nekretninaId = urlParams.get('id');
-
-    if (!nekretninaId) {
-        console.error('No property ID provided');
-        return;
-    }
-
-    const interesovanjaDetalji = document.getElementById('interesovanja-detalji');
-    const tipInteresovanja = document.getElementById('tip-interesovanja');
-    const posaljiInteresovanje = document.getElementById('posalji-interesovanje');
-
-    // Event listener for changing the type of interest
-    tipInteresovanja.addEventListener('change', function () {
-        const selectedTip = tipInteresovanja.value;
-
-        if (selectedTip === 'upit') {
-            interesovanjaDetalji.innerHTML = `
-                <label for="tekst-upita">Tekst upita:</label>
-                <textarea id="tekst-upita" name="tekst" required></textarea>
-            `;
-        } else if (selectedTip === 'zahtjev') {
-            interesovanjaDetalji.innerHTML = `
-                <label for="tekst-zahtjeva">Tekst zahtjeva:</label>
-                <textarea id="tekst-zahtjeva" name="tekst" required></textarea>
-                <label for="trazeni-datum">Traženi datum:</label>
-                <input type="date" id="trazeni-datum" name="trazeniDatum" required>
-            `;
-        } else if (selectedTip === 'ponuda') {
-            // Load ponude for dropdown
-            PoziviAjax.getKorisnik(function (error, korisnik) {
-                if (error) {
-                    console.error('Error fetching korisnik:', error);
-                    return;
-                }
-
-                PoziviAjax.getPonudeZaNekretninu(nekretninaId, function (error, ponude) {
-                    if (error) {
-                        console.error('Error fetching ponude:', error);
-                        return;
-                    }
-
-                    const relevantPonude = korisnik.admin
-                        ? ponude // Admin sees all offers
-                        : ponude.filter(p => p.korisnikId === korisnik.id); // User sees only their offers
-
-                    const options = relevantPonude.map(p => `<option value="${p.id}">Ponuda ${p.id}</option>`).join('');
-
-                    interesovanjaDetalji.innerHTML = `
-                        <label for="tekst-ponude">Tekst ponude:</label>
-                        <textarea id="tekst-ponude" name="tekst" required></textarea>
-                        <label for="cijena-ponude">Cijena ponude:</label>
-                        <input type="number" id="cijena-ponude" name="ponudaCijene" required>
-                        <label for="id-vezane-ponude">ID vezane ponude:</label>
-                        <select id="id-vezane-ponude" name="idVezanePonude" ${relevantPonude.length === 0 ? 'disabled' : ''}>
-                            ${options}
-                        </select>
-                    `;
-                });
-            });
-        }
-    });
-
-    // Initial form state
-    tipInteresovanja.dispatchEvent(new Event('change'));
-
-    // Handle form submission
-    posaljiInteresovanje.addEventListener('click', function () {
-        const selectedTip = tipInteresovanja.value;
-
-        if (selectedTip === 'upit') {
-            const tekst = document.getElementById('tekst-upita').value;
-
-            PoziviAjax.postUpit(nekretninaId, { tekst }, function (error, response) {
-                if (error) {
-                    console.error('Error sending upit:', error);
-                } else {
-                    alert('Upit successfully sent!');
-                    location.reload();
-                }
-            });
-        } else if (selectedTip === 'zahtjev') {
-            const tekst = document.getElementById('tekst-zahtjeva').value;
-            const trazeniDatum = document.getElementById('trazeni-datum').value;
-
-            PoziviAjax.postZahtjev(nekretninaId, { tekst, trazeniDatum }, function (error, response) {
-                if (error) {
-                    console.error('Error sending zahtjev:', error);
-                } else {
-                    alert('Zahtjev successfully sent!');
-                    location.reload();
-                }
-            });
-        } else if (selectedTip === 'ponuda') {
-            const tekst = document.getElementById('tekst-ponude').value;
-            const ponudaCijene = document.getElementById('cijena-ponude').value;
-            const idVezanePonude = document.getElementById('id-vezane-ponude').value;
-
-            PoziviAjax.postPonuda(nekretninaId, { tekst, ponudaCijene, idVezanePonude }, function (error, response) {
-                if (error) {
-                    console.error('Error sending ponuda:', error);
-                } else {
-                    alert('Ponuda successfully sent!');
-                    location.reload();
-                }
-            });
-        }
-    });
-});*/
