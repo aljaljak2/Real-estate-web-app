@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistika</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../Style/statistika.css">
+</head>
+<body>
+    <iframe src="meni.html"></iframe>
+
+    <h1>Prosječna Kvadratura</h1>
+
+    <div id="prosjecnaKvadratura-forma">
+        <label for="kriterij_pk">Izaberite kriterij:</label>
+        <select id="kriterij_pk">
+            <option value="tip_nekretnine">Tip nekretnine</option>
+            <option value="min_kvadratura">Minimalna kvadratura (m&sup2;)</option>
+            <option value="max_kvadratura">Maksimalna kvadratura (m&sup2;)</option>
+            <option value="min_cijena">Minimalna cijena (KM)</option>
+            <option value="max_cijena">Maksimalna cijena (KM)</option>
+            <option value="tip_grijanja">Tip grijanja</option>
+            <option value="godina_izgradnje">Godina izgradnje</option>
+            <option value="datum_objave">Datum objave (dd.mm.yyyy)</option>
+
+        </select>
+        
+        <label for="vrijednost_pk">Unesite vrijednost:</label>
+        <input type="text" id="vrijednost_pk" placeholder="Unesite vrijednost kriterija">
+        
+        <button id="prosjecnaKvadratura" onclick="izracunajProsjecnuKvadraturu()">Prosječna kvadratura</button>
+    </div>
+
+    <div class="result">
+        <p id="result-text-pk">Prosječna kvadratura: </p>
+    </div>
+
+    <h1>Outlier</h1>
+    <div>
+        <label for="kriterij_ol">Kriterij:</label>
+        <select id="kriterij_ol">
+            <option value="tip_nekretnine">Tip nekretnine</option>
+            <option value="min_kvadratura">Minimalna kvadratura (m&sup2;)</option>
+            <option value="max_kvadratura">Maksimalna kvadratura (m&sup2;)</option>
+            <option value="min_cijena">Minimalna cijena (KM)</option>
+            <option value="max_cijena">Maksimalna cijena (KM)</option>
+            <option value="tip_grijanja">Tip grijanja</option>
+            <option value="godina_izgradnje">Godina izgradnje</option>
+            <option value="datum_objave">Datum objave (dd.mm.yyyy)</option>
+
+
+        </select>
+    </div>
+    
+    <div>
+        <label for="vrijednost_ol">Vrijednost kriterija:</label>
+        <input type="text" id="vrijednost_ol" placeholder="Unesite vrijednost kriterija">
+    </div>
+    
+    <div>
+        <label for="nazivSvojstva">Naziv svojstva:</label>
+        <select id="nazivSvojstva">
+            <option value="kvadratura">Kvadratura</option>
+            <option value="cijena">Cijena</option>
+            <option value="godina_izgradnje">Godina izgradnje</option>
+        </select>
+    </div>
+    
+    <button id="outlier" onclick="izracunajOutlier()">Pronađi Outlier</button>
+    
+    <div>
+        <p id="result-text-outlier">Rezultat će biti prikazan ovdje.</p>
+    </div>
+
+    <h1>Moje Nekretnine</h1>
+
+    <div id="mojeNekretnine-forma">
+        <label for="korisnik_id">Korisnički ID:</label>
+        <input type="number" id="korisnik_id" placeholder="Unesite korisnički ID" required>
+        
+        <label for="korisnik_ime">Ime korisnika:</label>
+        <input type="text" id="korisnik_ime" placeholder="Unesite ime korisnika" required>
+        
+        <label for="korisnik_prezime">Prezime korisnika:</label>
+        <input type="text" id="korisnik_prezime" placeholder="Unesite prezime korisnika" required>
+        
+        <label for="korisnik_username">Korisničko ime:</label>
+        <input type="text" id="korisnik_username" placeholder="Unesite korisničko ime" required>
+
+        <button id="mojeNekretnine" onclick="izracunajMojeNekretnine()">Prikaz mojih nekretnina</button>
+    </div>
+
+    <div class="result">
+        <p id="result-text-mn">Moje nekretnine će biti prikazane ovdje.</p>
+    </div>
+
+    <h1>Unos Perioda i Raspona Cijena za Histogram</h1>
+
+
+<div id="periodi-form">
+    <h3>Unesite periode</h3>
+    <div id="periodi-container"></div>
+    <button type="button" onclick="dodajPeriod()">Dodaj Period</button>
+</div>
+
+
+<div id="rasponi-cijena-form">
+    <h3>Unesite raspon cijena</h3>
+    <div id="rasponi-cijena-container"></div>
+    <button type="button" onclick="dodajRasponCijena()">Dodaj Raspon Cijena</button>
+</div>
+
+<button onclick="iscrtajHistogram()">Generiraj Histogram</button>
+
+<div id="chart-container">
+    <canvas id="histogramChart"></canvas>
+</div>
+
+
+
+
+
+    <script src="../scripts/StatistikaNekretnina.js"></script>
+    <script  src="../scripts/SpisakNekretnina.js"></script>
+    <script  src="../scripts/statistika.js"></script>
+    
+</body>
+</html>
+

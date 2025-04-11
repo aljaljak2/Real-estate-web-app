@@ -1,0 +1,154 @@
+[
+  {
+    "id": 1,
+    "tip_nekretnine": "Stan",
+    "naziv": "Useljiv stan Sarajevo",
+    "kvadratura": 58,
+    "cijena": 232000,
+    "tip_grijanja": "plin",
+    "lokacija": "Novo Sarajevo",
+    "godina_izgradnje": 2019,
+    "datum_objave": "01.10.2023.",
+    "opis": "Sociis natoque penatibus.",
+    "upiti": [
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Nullam eu pede mollis pretium."
+      },
+      {
+        "korisnik_id": 2,
+        "tekst_upita": "Phasellus viverra nulla."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "tip_nekretnine": "Poslovni prostor",
+    "naziv": "Mali poslovni prostor",
+    "kvadratura": 20,
+    "cijena": 70000,
+    "tip_grijanja": "struja",
+    "lokacija": "Centar",
+    "godina_izgradnje": 2005,
+    "datum_objave": "20.08.2023.",
+    "opis": "Magnis dis parturient montes.",
+    "upiti": [
+      {
+        "korisnik_id": 2,
+        "tekst_upita": "Integer tincidunt."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "tip_nekretnine": "Kuća",
+    "naziv": "Kuća sa bazenom",
+    "kvadratura": 200,
+    "cijena": 500000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2010,
+    "datum_objave": "15.09.2024.",
+    "opis": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+    "upiti": [
+      {
+        "korisnik_id": 2,
+        "tekst_upita": "Sve OK."
+      },
+      {
+        "korisnik_id": 2,
+        "tekst_upita": "Prvi isti"
+      },
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Integer tincidunt."
+      },
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Bazen nije fino očišćen"
+      },
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Sve je bilo na nivou"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "tip_nekretnine": "Stan",
+    "naziv": "Stan u centru grada",
+    "kvadratura": 70,
+    "cijena": 300000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2015,
+    "datum_objave": "01.10.2023.",
+    "opis": "Sociis natoque penatibus.",
+    "upiti": [
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Zanima me više informacija o ovoj nekretnini."
+      },
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Zanima me više informacija o ovoj nekretnini."
+      },
+      {
+        "korisnik_id": 1,
+        "tekst_upita": "Zanima me više informacija o ovoj nekretnini."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "tip_nekretnine": "Kuća",
+    "naziv": "Kuća u prirodi",
+    "kvadratura": 150,
+    "cijena": 400000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2010,
+    "datum_objave": "14.09.2024.",
+    "opis": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+    "upiti": []
+  },
+  {
+    "id": 6,
+    "tip_nekretnine": "Stan158",
+    "naziv": "Stan u centru grada",
+    "kvadratura": 70,
+    "cijena": 300000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2015,
+    "datum_objave": "01.10.2023.",
+    "opis": "Sociis natoque penatibus.",
+    "upiti": []
+  },
+  {
+    "id": 7,
+    "tip_nekretnine": "Kuća34",
+    "naziv": "Kuća u prirodi",
+    "kvadratura": 150,
+    "cijena": 400000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2010,
+    "datum_objave": "14.09.2024.",
+    "opis": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+    "upiti": []
+  },
+  {
+    "id": 8,
+    "tip_nekretnine": "Stan46",
+    "naziv": "Stan u centru grada",
+    "kvadratura": 70,
+    "cijena": 300000,
+    "tip_grijanja": "plin",
+    "lokacija": "Ilidža",
+    "godina_izgradnje": 2015,
+    "datum_objave": "01.10.2022.",
+    "opis": "Sociis natoque penatibus.",
+    "upiti": []
+  }
+]

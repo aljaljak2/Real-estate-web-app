@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bs-BA">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalji</title>
+    <link rel="stylesheet" type="text/css" href="../style/detalji.css">
+</head>
+
+<body>
+    <iframe src="meni.html"></iframe>
+
+    <div id="osnovno"></div>
+
+    <h3>DETALJI</h3>
+    <div id="detalji"></div>
+
+    <h3>INTERESOVANJA</h3>
+    <div id="upiti-container">
+        <button id="carousel-left" class="navigacija">◀</button>
+        <div id="upiti"></div>
+        <button id="carousel-right" class="navigacija">▶</button>
+    </div>
+
+    <h3>KREIRAJ INTERESOVANJE</h3>
+<div id="interesovanja">
+    <form id="forma-interesovanja">
+        <label for="tip-interesovanja">Tip interesovanja:</label>
+        <select id="tip-interesovanja" name="tip">
+            <option value="upit">Upit</option>
+            <option value="zahtjev">Zahtjev</option>
+            <option value="ponuda">Ponuda</option>
+        </select>
+
+        <div id="interesovanja-detalji"></div>
+
+        <button type="button" id="posalji-interesovanje">Pošalji</button>
+    </form>
+</div>
+
+    <script src="../scripts/PoziviAjax.js"></script>
+    <script src="../scripts/detalji.js"></script>
+    <script src="../scripts/carousel.js"></script>
+</body>
+
+</html>
